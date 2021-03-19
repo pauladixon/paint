@@ -6,10 +6,11 @@ import randomColor from 'random-color'
 
 export default function App() {
 
-  let random = randomColor()
-
   const [ count, setCount ] = useState(0)
   const [ color, setColor ] = useState(null)
+
+  let random = randomColor()
+
   useEffect(() => {
     setColor(random.hexString())
   }, [count])
@@ -17,7 +18,7 @@ export default function App() {
   return (
     <div 
       className="App"
-      style={{  borderTop: `10px solid ${color}`}}
+      style={{borderTop: `10px solid ${color}`}}
     >
       <button onClick={() => setCount(currentCount => currentCount - 1)}>-</button>
       {count}
