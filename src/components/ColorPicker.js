@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'core-js/library/fn/reflect/es7/metadata'
-import randomColor from 'randomColor'
+import React from 'react'
 
 export default function ColorPicker({ colors = [], activeColor, setActiveColor }) {
     if (!colors.length) return null
