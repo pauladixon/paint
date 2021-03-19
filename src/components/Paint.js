@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
+import randomColor from 'random-color'
 import Name from './Name'
 import ColorPicker from './ColorPicker'
-import randomColor from 'random-color'
 import Canvas from './Canvas'
 import WindowSize from './WindowSize'
+import RefreshButton from './RefreshButton'
 
 export default function Paint() {
 
@@ -24,6 +25,9 @@ export default function Paint() {
 
     useEffect(getColors, [])
 
+    const cb = useCallback(() => getColors())
+    const memo = useMemo(() => <Name/>)
+
     const headerRef = useRef({ offsetHeight: 0 })
 
     return (
@@ -33,13 +37,16 @@ export default function Paint() {
                 style = {{ borderTop: `10px solid ${activeColor}`}}
             >
                 <div className='app'>
-                    <Name />
+                    {memo}
                 </div>
                 <div style={{ marginTop: 10 }}>
                     <ColorPicker
                         colors = {colors}
                         activeColor = {activeColor}
                         setActiveColor = {setActiveColor}
+                    />
+                    <RefreshButton
+                        cb = {cb}
                     />
                 </div>
             </header>
