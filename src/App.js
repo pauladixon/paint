@@ -12,7 +12,7 @@ export default function App() {
   const [ color, setColor ] = useState(null)
   useEffect(() => {
     setColor(random.hexString())
-  })
+  }, [count])
 
   return (
     <div 
@@ -21,7 +21,7 @@ export default function App() {
     >
       <button onClick={() => setCount(currentCount => currentCount - 1)}>-</button>
       {count}
-      <button onClick={() => setCount(currentCount => currentCount - 1)}>+</button>
+      <button onClick={() => setCount(currentCount => currentCount + 1)}>+</button>
       <Name/>
     </div>
   )
