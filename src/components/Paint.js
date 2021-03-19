@@ -20,9 +20,7 @@ export default function Paint() {
         })
     }
 
-    useEffect(() => {
-        setActiveColor(getColors())
-    }, [])
+    useEffect(getColors, [])
 
     return (
         <header style = {{ borderTop: `10px solid ${activeColor}`}}>
