@@ -5,6 +5,7 @@ import ColorPicker from './ColorPicker'
 import Canvas from './Canvas'
 import WindowSize from './WindowSize'
 import RefreshButton from './RefreshButton'
+import useWindowSize from './WindowSize'
 
 export default function Paint() {
 
@@ -22,12 +23,19 @@ export default function Paint() {
             setActiveColor(res.colors[0].hex.value)
         })
     }
-
     useEffect(getColors, [])
 
     const refresh = useCallback(() => getColors())
-
     const headerRef = useRef({ offsetHeight: 0 })
+
+    const [ visible, setVisible ] = useState(false)
+    let timeoutId = useRef()
+
+    const [windowWidth, windowHeight] = useWindowSize(() => {
+        setVisible(true)
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => setVisible(false), 500)
+    })
 
     return (
         <div className='app'>
@@ -55,7 +63,9 @@ export default function Paint() {
                     height={window.innerHeight -  headerRef.current.offsetHeight}
                 />
             )}
-            <WindowSize/>
+            <div className={`window-size ${visible ? '' : 'hidden'}`}>
+                {windowWidth} x {windowHeight}
+            </div>
         </div>
     )
 }
