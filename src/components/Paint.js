@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Name from './Name'
 import ColorPicker from './ColorPicker'
 import randomColor from 'random-color'
@@ -10,7 +10,7 @@ export default function Paint() {
     const [ colors, setColors ] = useState([])
     const [ activeColor, setActiveColor ] = useState(null)
 
-    let random = randomColor()
+    const random = randomColor()
 
     const getColors = () => {
         const baseColor = random.hexString().slice(1)
@@ -24,9 +24,14 @@ export default function Paint() {
 
     useEffect(getColors, [])
 
+    const headerRef = useRef({ offsetHeight: 0 })
+
     return (
         <div className='app'>
-            <header style = {{ borderTop: `10px solid ${activeColor}`}}>
+            <header 
+                ref = { headerRef }
+                style = {{ borderTop: `10px solid ${activeColor}`}}
+            >
                 <div className='app'>
                     <Name />
                 </div>
@@ -41,7 +46,7 @@ export default function Paint() {
             {activeColor && (
                 <Canvas
                     color={activeColor}
-                    height={window.innerHeight}
+                    height={window.innerHeight -  headerRef.current.offsetHeight}
                 />
             )}
             <WindowSize/>
